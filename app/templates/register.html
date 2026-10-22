@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guest Registration</title>
+<style>body{font-family:sans-serif;max-width:480px;margin:2rem auto;padding:0 1rem}label{display:block;margin-top:1rem}
+input[type=text],input[type=email],input[type=password],input[type=tel]{width:100%;padding:.5rem;box-sizing:border-box}
+.err{color:#b00020;font-size:.9rem}.notice{background:#f3f3f3;padding:.75rem;margin-top:1rem;font-size:.9rem}button{margin-top:1rem;padding:.6rem 1.2rem}</style></head>
+<body>
+<h1>Create a guest account</h1>
+<form method="post" action="{{ url_for('register') }}" novalidate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label>Full name <input type="text" name="name" value="{{ values.get('name','') }}" maxlength="100"></label>
+  {% if errors.name %}<div class="err">{{ errors.name }}</div>{% endif %}
+  <label>Email <input type="email" name="email" value="{{ values.get('email','') }}" maxlength="100"></label>
+  {% if errors.email %}<div class="err">{{ errors.email }}</div>{% endif %}
+  <label>Phone <input type="tel" name="phone" value="{{ values.get('phone','') }}" maxlength="20"></label>
+  {% if errors.phone %}<div class="err">{{ errors.phone }}</div>{% endif %}
+  <label>Password (at least 8 characters) <input type="password" name="password" autocomplete="new-password"></label>
+  {% if errors.password %}<div class="err">{{ errors.password }}</div>{% endif %}
+  <div class="notice">We collect your name, email, phone number, and booking dates only to manage your reservation and contact you about it. Your password is stored as a salted hash (it cannot be read back), and we never store your card number or PIN. Only the hotel staff who need it can see your data, and we do not sell or share it for marketing. You can view, correct, or delete your account at any time from your profile. By creating an account you agree to this notice.</div>
+  <label><input type="checkbox" name="consent"> I have read and accept the privacy notice</label>
+  {% if errors.consent %}<div class="err">{{ errors.consent }}</div>{% endif %}
+  <button type="submit">Register</button>
+</form></body></html>
